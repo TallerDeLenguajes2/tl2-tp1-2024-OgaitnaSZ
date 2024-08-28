@@ -1,0 +1,15 @@
+d:\Taller2\1\tp\tl2-tp1-2024-OgaitnaSZ\bin\Debug\net8.0\tl2-tp1-2024-OgaitnaSZ.exe
+d:\Taller2\1\tp\tl2-tp1-2024-OgaitnaSZ\bin\Debug\net8.0\tl2-tp1-2024-OgaitnaSZ.deps.json
+d:\Taller2\1\tp\tl2-tp1-2024-OgaitnaSZ\bin\Debug\net8.0\tl2-tp1-2024-OgaitnaSZ.runtimeconfig.json
+d:\Taller2\1\tp\tl2-tp1-2024-OgaitnaSZ\bin\Debug\net8.0\tl2-tp1-2024-OgaitnaSZ.dll
+d:\Taller2\1\tp\tl2-tp1-2024-OgaitnaSZ\bin\Debug\net8.0\tl2-tp1-2024-OgaitnaSZ.pdb
+d:\Taller2\1\tp\tl2-tp1-2024-OgaitnaSZ\obj\Debug\net8.0\tl2-tp1-2024-OgaitnaSZ.GeneratedMSBuildEditorConfig.editorconfig
+d:\Taller2\1\tp\tl2-tp1-2024-OgaitnaSZ\obj\Debug\net8.0\tl2-tp1-2024-OgaitnaSZ.AssemblyInfoInputs.cache
+d:\Taller2\1\tp\tl2-tp1-2024-OgaitnaSZ\obj\Debug\net8.0\tl2-tp1-2024-OgaitnaSZ.AssemblyInfo.cs
+d:\Taller2\1\tp\tl2-tp1-2024-OgaitnaSZ\obj\Debug\net8.0\tl2-tp1-2024-OgaitnaSZ.csproj.CoreCompileInputs.cache
+d:\Taller2\1\tp\tl2-tp1-2024-OgaitnaSZ\obj\Debug\net8.0\tl2-tp1-2024-OgaitnaSZ.sourcelink.json
+d:\Taller2\1\tp\tl2-tp1-2024-OgaitnaSZ\obj\Debug\net8.0\tl2-tp1-2024-OgaitnaSZ.dll
+d:\Taller2\1\tp\tl2-tp1-2024-OgaitnaSZ\obj\Debug\net8.0\refint\tl2-tp1-2024-OgaitnaSZ.dll
+d:\Taller2\1\tp\tl2-tp1-2024-OgaitnaSZ\obj\Debug\net8.0\tl2-tp1-2024-OgaitnaSZ.pdb
+d:\Taller2\1\tp\tl2-tp1-2024-OgaitnaSZ\obj\Debug\net8.0\tl2-tp1-2024-OgaitnaSZ.genruntimeconfig.cache
+d:\Taller2\1\tp\tl2-tp1-2024-OgaitnaSZ\obj\Debug\net8.0\ref\tl2-tp1-2024-OgaitnaSZ.dll

@@ -27,7 +27,7 @@ class Cadeteria{
         double totalGanado = 0;
 
         foreach (var cadete in ListadoCadetes){
-            Console.WriteLine($"Cadete: {cadete.Nombre} ───────────────────");
+            Console.WriteLine($"Cadete: {cadete.Nombre}");
             Console.WriteLine($"Pedidos Entregados: {cadete.PedidosEntregados()}");
             Console.WriteLine($"Jornal: {cadete.JornalACobrar()}");
             Console.WriteLine("─────────────────────────────────────");
