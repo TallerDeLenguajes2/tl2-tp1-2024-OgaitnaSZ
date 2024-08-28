@@ -13,6 +13,7 @@ La relación entre **Cadete** y **Cadeteria** es de composicion porque un **Cade
 - **AsignarPedido(Pedido pedido):** Asigna un pedido al cadete.
 - **EliminarPedido(Pedido pedido):** Elimina un pedido del cadete.
 - **MostrarPedidos():** Muestra todos los pedidos asignados al cadete (pendientes y entregados).
+- **PedidosEntregados():** Muestra la cantidad de pedidos entregados.
 ## Clase Cadeteria:
 - **AsignarPedidoACadete(Cadete cadete, Pedido pedido):** Asigna un pedido a un cadete.
 - **ReasignarPedido(Cadete cadeteActual, Cadete cadeteNuevo, Pedido pedido):** Reasigna un pedido de un cadete a otro.
