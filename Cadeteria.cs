@@ -49,13 +49,13 @@ class Cadeteria{
     }
 
     public Cadete ObtenerCadetePorId(int id){
-        var cadeteEncontrado = new Cadete(0, "null", "null", "null");
         foreach (var cadete in ListadoCadetes){
             if(cadete.Id == id){
-                cadeteEncontrado = cadete;
+                Cadete cadeteEncontrado = cadete;
+                return cadeteEncontrado;
             }
         }
-        return cadeteEncontrado;
+        return null;
     }
 }
 }

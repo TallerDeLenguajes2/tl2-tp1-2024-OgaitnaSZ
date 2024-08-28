@@ -25,5 +25,14 @@ class Pedido{
     public void CambiarEstado(string nuevoEstado){
         Estado = nuevoEstado;
     }
+
+    public static Pedido ObtenerPedidoPorNum(List<Pedido> pedidos, int num){
+        foreach(Pedido pedido in pedidos){
+            if(pedido.Nro == num){
+                return pedido;
+            }
+        }
+        return null;
+    }
 }
 }
