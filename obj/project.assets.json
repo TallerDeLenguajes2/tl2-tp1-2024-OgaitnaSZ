@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Taller2\\1\\tp\\tl2-tp1-2024-OgaitnaSZ\\tl2-tp1-2024-OgaitnaSZ.csproj",
+      "projectUniqueName": "C:\\Users\\santi\\taller\\tl2-tp1-2024-OgaitnaSZ\\tl2-tp1-2024-OgaitnaSZ.csproj",
       "projectName": "tl2-tp1-2024-OgaitnaSZ",
-      "projectPath": "D:\\Taller2\\1\\tp\\tl2-tp1-2024-OgaitnaSZ\\tl2-tp1-2024-OgaitnaSZ.csproj",
+      "projectPath": "C:\\Users\\santi\\taller\\tl2-tp1-2024-OgaitnaSZ\\tl2-tp1-2024-OgaitnaSZ.csproj",
       "packagesPath": "C:\\Users\\santi\\.nuget\\packages\\",
-      "outputPath": "D:\\Taller2\\1\\tp\\tl2-tp1-2024-OgaitnaSZ\\obj\\",
+      "outputPath": "C:\\Users\\santi\\taller\\tl2-tp1-2024-OgaitnaSZ\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\santi\\AppData\\Roaming\\NuGet\\NuGet.Config"

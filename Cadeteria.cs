@@ -6,6 +6,7 @@ class Cadeteria{
     public string Nombre { get; private set; }
     public string Telefono { get; private set; }
     public List<Cadete> ListadoCadetes { get; private set; }
+    public List<Pedido> ListadoPedidos { get; private set; }
 
     public Cadeteria(string nombre, string telefono){
         Nombre = nombre;
@@ -13,26 +14,23 @@ class Cadeteria{
         ListadoCadetes = new List<Cadete>();
     }
 
-    public void AsignarPedidoACadete(Cadete cadete, Pedido pedido){
-        cadete.AsignarPedido(pedido);
-    }
-
-    public void ReasignarPedido(Cadete cadeteActual, Cadete cadeteNuevo, Pedido pedido){
-        cadeteActual.EliminarPedido(pedido);
-        cadeteNuevo.AsignarPedido(pedido);
+    public void ReasignarPedido(Cadete cadeteNuevo, Pedido pedido){
+        pedido.cadete = cadeteNuevo;
     }
 
     public void GenerarInformeDeActividad(){
-        int totalPedidos = 0;
+        double totalPedidos = 0;
         double totalGanado = 0;
 
         foreach (var cadete in ListadoCadetes){
+            double jornal = JornalACobrar(cadete.Id);
+            double numPedidos = jornal/500;
             Console.WriteLine($"Cadete: {cadete.Nombre}");
-            Console.WriteLine($"Pedidos Entregados: {cadete.PedidosEntregados()}");
-            Console.WriteLine($"Jornal: {cadete.JornalACobrar()}");
+            Console.WriteLine($"Pedidos Entregados: {numPedidos}");
+            Console.WriteLine($"Jornal: {jornal}");
             Console.WriteLine("─────────────────────────────────────");
-            totalPedidos += cadete.PedidosEntregados();
-            totalGanado += cadete.JornalACobrar();
+            totalPedidos += numPedidos;
+            totalGanado += jornal;
         }
 
         double promedioPedidos = totalPedidos / (double)ListadoCadetes.Count;
@@ -56,6 +54,29 @@ class Cadeteria{
             }
         }
         return null;
+    }
+
+    //TP 2
+    public double JornalACobrar(int idCadete){
+        Cadete cadete = ObtenerCadetePorId(idCadete);
+        int jornal = 0;
+        foreach(Pedido pedido in ListadoPedidos){
+            if(pedido.cadete == cadete){
+                jornal += 500;
+            }
+        }
+        return jornal;
+    }
+    public void AsignarCadeteAPedido(int idCadete, int numPedido){   
+        Cadete cadete = ObtenerCadetePorId(idCadete);
+        foreach(Pedido pedido in ListadoPedidos){
+            if(pedido.Nro == numPedido){
+                pedido.cadete = cadete;
+            }
+        }
+    }
+    public void AgregarPedido(Pedido pedido){
+        ListadoPedidos.Add(pedido);
     }
 }
 }

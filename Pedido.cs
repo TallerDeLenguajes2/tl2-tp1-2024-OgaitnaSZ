@@ -1,3 +1,4 @@
+using EspacioCadete;
 using EspacioCliente;
 
 namespace EspacioPedido{
@@ -6,6 +7,7 @@ class Pedido{
     public string Obs { get; private set; }
     public Cliente Cliente { get; private set; }
     public string Estado { get; private set; }
+    public Cadete cadete { get; set; }
 
     public Pedido(int nro, string obs, Cliente cliente){
         Nro = nro;

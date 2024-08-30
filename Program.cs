@@ -9,14 +9,13 @@ using EspacioPedido;
 using EspacioManejoArchivos;
 
 Cadeteria cadeteria = new Cadeteria("Cadeteria San Miguel", "381123123");
-var pedidos = new List<Pedido>();
 var cadetes = CargaDeArchivos.CargarCadetesDesdeCSV("cadetes.csv");
 
 foreach (var cadete in cadetes){
     cadeteria.AgregarCadete(cadete);
 }
 bool continuar = true;
-while(continuar){
+{
     Console.WriteLine("──────────────────────────────────");
     Console.WriteLine("Seleccione una opción:");
     Console.WriteLine("──────────────────────────────────");
@@ -32,16 +31,16 @@ while(continuar){
     if(int.TryParse(Console.ReadLine(), out opcion)){
         switch (opcion){
             case 1:
-                pedidos.Add(Opciones.DarDeAltaPedido());
+                Opciones.DarDeAltaPedido(cadeteria);
                 break;
             case 2:
-                Opciones.AsignarPedido(cadeteria, pedidos);
+                //Opciones.AsignarPedido(cadeteria, pedidos);
                 break;
             case 3: 
-                Opciones.CambiarEstadoDePedido(pedidos);
+                Opciones.CambiarEstadoDePedido(cadeteria);
                 break;
             case 4:
-                Opciones.ReasignarPedidoAOtroCadete(cadeteria, pedidos);
+                Opciones.ReasignarPedidoAOtroCadete(cadeteria);
                 break;
             case 5:
                 cadeteria.GenerarInformeDeActividad();
