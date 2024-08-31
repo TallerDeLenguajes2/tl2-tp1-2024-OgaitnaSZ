@@ -15,16 +15,16 @@ foreach (var cadete in cadetes){
     cadeteria.AgregarCadete(cadete);
 }
 bool continuar = true;
-{
+
+while(continuar){
     Console.WriteLine("──────────────────────────────────");
     Console.WriteLine("Seleccione una opción:");
     Console.WriteLine("──────────────────────────────────");
     Console.WriteLine("1. Dar de alta pedidos");
-    Console.WriteLine("2. Asignar pedido a cadete");
-    Console.WriteLine("3. Cambiar estado de un pedido");
-    Console.WriteLine("4. Reasignar pedido a otro cadete");
-    Console.WriteLine("5. Generar informe de actividad");
-    Console.WriteLine("6. Salir");
+    Console.WriteLine("2. Cambiar estado de un pedido");
+    Console.WriteLine("3. Reasignar pedido a otro cadete");
+    Console.WriteLine("4. Generar informe de actividad");
+    Console.WriteLine("5. Salir");
     Console.WriteLine("──────────────────────────────────");
 
     int opcion;
@@ -33,19 +33,16 @@ bool continuar = true;
             case 1:
                 Opciones.DarDeAltaPedido(cadeteria);
                 break;
-            case 2:
-                //Opciones.AsignarPedido(cadeteria, pedidos);
-                break;
-            case 3: 
+            case 2: 
                 Opciones.CambiarEstadoDePedido(cadeteria);
                 break;
-            case 4:
+            case 3:
                 Opciones.ReasignarPedidoAOtroCadete(cadeteria);
                 break;
-            case 5:
+            case 4:
                 cadeteria.GenerarInformeDeActividad();
                 break;
-            case 6:
+            case 5:
                 continuar = false;
                 break;
             default:
