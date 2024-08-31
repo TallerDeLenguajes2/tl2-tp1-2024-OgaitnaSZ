@@ -114,27 +114,46 @@ namespace EspacioManejoArchivos{
         }
 
         public static void ReasignarPedidoAOtroCadete(Cadeteria cadeteria){
-            mostrarPedidos(cadeteria.ListadoPedidos);
-            Console.WriteLine("Ingrese el numero de pedido a reasignar: ");
-            int numPedido;
-            if(int.TryParse(Console.ReadLine(), out numPedido)){
-                int encontrado = 0;
-                foreach(Pedido pedido in cadeteria.ListadoPedidos){
-                    if(pedido.Nro == numPedido){
-                        mostrarCadetes(cadeteria.ListadoCadetes);
-                        Console.WriteLine("Ingrese ID del cadete a asignar: ");
-                        int idCadete;
-                        if(int.TryParse(Console.ReadLine(), out idCadete)){
-                            Cadete cadete = cadeteria.ObtenerCadetePorId(idCadete);
-                            cadeteria.ReasignarPedido(cadete, pedido);
-                            Console.WriteLine("Pedido reasignado con exito");
-                        }else{
-                            Console.WriteLine("Seleccione una opcion valida");
+            if(cadeteria.ListadoPedidos != null && cadeteria.ListadoPedidos.Count()>0){
+                mostrarPedidos(cadeteria.ListadoPedidos);
+                Console.WriteLine("Ingrese el numero de pedido a reasignar: ");
+                int numPedido;
+                bool pedidoEncontrado = true;
+                while(pedidoEncontrado){
+                    if(int.TryParse(Console.ReadLine(), out numPedido)){
+                        foreach(Pedido pedido in cadeteria.ListadoPedidos){
+                            if(pedido.Nro == numPedido){
+                                mostrarCadetes(cadeteria.ListadoCadetes);
+                                Console.WriteLine("Ingrese ID del cadete a asignar: ");
+                                int idCadete;
+                                bool cadeteEncontrado = true;
+                                while(cadeteEncontrado){
+                                    if(int.TryParse(Console.ReadLine(), out idCadete)){
+                                        Cadete cadete = cadeteria.ObtenerCadetePorId(idCadete);
+                                        if(cadete != null){
+                                            cadeteria.ReasignarPedido(cadete, pedido);
+                                            Console.WriteLine("Pedido reasignado con exito");
+                                            cadeteEncontrado = false;
+                                        }
+                                        if(cadeteEncontrado){
+                                            Console.WriteLine("Escriba un ID de cadete existente");
+                                        }
+                                        pedidoEncontrado = false;
+                                    }else{
+                                        Console.WriteLine("Escriba un numero");
+                                    }
+                                }
+                            }
                         }
+                        if(pedidoEncontrado){
+                            Console.WriteLine("Escriba un ID de pedido existente");
+                        }
+                    }else{
+                        Console.WriteLine("Escriba un numero");
                     }
                 }
             }else{
-                Console.WriteLine("Seleccione una opcion valida");
+                Console.WriteLine("No hay pedidos pendientes");
             }
         }
 
