@@ -1,3 +1,7 @@
+using System;
+using System.IO;
+using System.Linq;
+using System.Text;
 using EspacioCadete;
 using EspacioPedido;
 
@@ -20,23 +24,45 @@ class Cadeteria{
     }
 
     public void GenerarInformeDeActividad(){
-        double totalPedidos = 0;
-        double totalGanado = 0;
+        if(ListadoPedidos.Count()>0){
+            double totalPedidos = 0;
+            double totalGanado = 0;
 
-        foreach (var cadete in ListadoCadetes){
-            double jornal = JornalACobrar(cadete.Id);
-            double numPedidos = jornal/500;
-            Console.WriteLine($"Cadete: {cadete.Nombre}");
-            Console.WriteLine($"Pedidos Entregados: {numPedidos}");
-            Console.WriteLine($"Jornal: {jornal}");
-            Console.WriteLine("─────────────────────────────────────");
-            totalPedidos += numPedidos;
-            totalGanado += jornal;
+            var informe = ListadoCadetes.Select(
+                cadete =>{
+                    double jornal = JornalACobrar(cadete.Id);
+                    double numPedidos = jornal / 500;
+                    totalPedidos += numPedidos;
+                    totalGanado += jornal;
+
+                    return new{
+                        NombreCadete = cadete.Nombre,
+                        PedidosEntregados = numPedidos,
+                        Jornal = jornal
+                    };
+                }).ToList();
+
+            double promedioPedidos = totalPedidos / (double)ListadoCadetes.Count;
+
+            DateTime fecha = DateTime.Today;
+            var csvCadetes = new StringBuilder();
+            csvCadetes.AppendLine("Cadete,Pedidos Entregados,Jornal,Fecha");
+
+            foreach (var item in informe){
+                csvCadetes.AppendLine($"{item.NombreCadete},{item.PedidosEntregados},{item.Jornal},{fecha.ToShortDateString()}");
+            }
+
+            File.WriteAllText("Informe-de-cadetes.csv", csvCadetes.ToString());
+
+            var csvCadeteria = new StringBuilder();
+            csvCadeteria.AppendLine("Fecha,Total Ganado,Pedidos relizados,Promedio de pedidos por cadete");
+            csvCadeteria.AppendLine($"{fecha.ToShortDateString()},{totalGanado},{totalPedidos},{promedioPedidos}");
+            File.WriteAllText("Informe-de-cadeteria.csv", csvCadeteria.ToString());
+
+            Console.WriteLine($"Total de Pedidos: {totalPedidos}, Total Ganado: {totalGanado}, Promedio de Pedidos por Cadete: {promedioPedidos}");
+        }else{
+            Console.WriteLine("No hay pedidos");
         }
-
-        double promedioPedidos = totalPedidos / (double)ListadoCadetes.Count;
-
-        Console.WriteLine($"Total de Pedidos: {totalPedidos}, Total Ganado: {totalGanado}, Promedio de Pedidos por Cadete: {promedioPedidos}");
     }
 
     public void AgregarCadete(Cadete cadete){
