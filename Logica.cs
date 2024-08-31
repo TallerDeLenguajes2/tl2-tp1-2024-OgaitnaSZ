@@ -89,23 +89,24 @@ namespace EspacioManejoArchivos{
                 mostrarPedidos(cadeteria.ListadoPedidos);
                 Console.WriteLine("Ingrese el numero del pedido:");
                 int numPedido;
+                bool pedidoEncontrado = true;
 
-                if(int.TryParse(Console.ReadLine(), out numPedido)){
-                    int encontrado = 0;
-                    foreach(Pedido pedido in cadeteria.ListadoPedidos){
-                        if(pedido.Nro == numPedido){
-                            pedido.CambiarEstado("Entregado");
-                            encontrado = 1;
-                            break;
+                while(pedidoEncontrado){
+                    if(int.TryParse(Console.ReadLine(), out numPedido)){
+                        foreach(Pedido pedido in cadeteria.ListadoPedidos){
+                            if(pedido.Nro == numPedido){
+                                pedido.CambiarEstado("Entregado");
+                                Console.WriteLine("Pedido actualizado con exito");
+                                pedidoEncontrado = false;
+                                break;
+                            }
                         }
-                    }
-                    if(encontrado == 1){
-                        Console.WriteLine("Pedido actualizado con exito");
+                        if(pedidoEncontrado){
+                            Console.WriteLine("Escriba un ID de pedido existente");
+                        }
                     }else{
-                        Console.WriteLine("No se encontro el pedido");
+                        Console.WriteLine("Escriba un numero");
                     }
-                }else{
-                    Console.WriteLine("Seleccione una opcion valida");
                 }
             }else{
                 Console.WriteLine("No hay pedidos pendientes");
