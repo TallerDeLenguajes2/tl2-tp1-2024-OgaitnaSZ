@@ -7,13 +7,14 @@ class Pedido{
     public string Obs { get; private set; }
     public Cliente Cliente { get; private set; }
     public string Estado { get; private set; }
-    public Cadete cadete { get; set; }
+    public Cadete Cadete { get; set; }
 
-    public Pedido(int nro, string obs, Cliente cliente){
+    public Pedido(int nro, string obs, Cliente cliente, Cadete cadete){
         Nro = nro;
         Obs = obs;
         Cliente = cliente;
         Estado = "Pendiente";
+        Cadete = cadete;
     }
 
     public void VerDireccionCliente(){

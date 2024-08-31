@@ -23,14 +23,13 @@ namespace EspacioManejoArchivos{
                     Console.WriteLine("Ingrese los datos de referencia de la dirección:");
                     string datosReferencia = Console.ReadLine();
                     Cliente cliente = new Cliente(nombreCliente, direccionCliente, telefonoCliente, datosReferencia);
-                    Pedido pedido = new Pedido(nroPedido, obs, cliente);
+                    
                     
                     int idCadete;
                     Console.WriteLine("Ingrese el ID del cadete para asignar el pedido:");
                     if(int.TryParse(Console.ReadLine(), out idCadete)){
                         Cadete cadete = cadeteria.ObtenerCadetePorId(idCadete);
-                        pedido.cadete = cadete;
-                        cadeteria.AgregarPedido(pedido);
+                        cadeteria.AgregarPedido(new Pedido(nroPedido, obs, cliente, cadete));
                         Console.WriteLine("Pedido creado con éxito.");
                         control = false;
                     }else{

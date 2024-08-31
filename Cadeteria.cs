@@ -12,10 +12,11 @@ class Cadeteria{
         Nombre = nombre;
         Telefono = telefono;
         ListadoCadetes = new List<Cadete>();
+        ListadoPedidos = new List<Pedido>();
     }
 
     public void ReasignarPedido(Cadete cadeteNuevo, Pedido pedido){
-        pedido.cadete = cadeteNuevo;
+        pedido.Cadete = cadeteNuevo;
     }
 
     public void GenerarInformeDeActividad(){
@@ -61,7 +62,7 @@ class Cadeteria{
         Cadete cadete = ObtenerCadetePorId(idCadete);
         int jornal = 0;
         foreach(Pedido pedido in ListadoPedidos){
-            if(pedido.cadete == cadete){
+            if(pedido.Cadete == cadete){
                 jornal += 500;
             }
         }
@@ -71,7 +72,7 @@ class Cadeteria{
         Cadete cadete = ObtenerCadetePorId(idCadete);
         foreach(Pedido pedido in ListadoPedidos){
             if(pedido.Nro == numPedido){
-                pedido.cadete = cadete;
+                pedido.Cadete = cadete;
             }
         }
     }
