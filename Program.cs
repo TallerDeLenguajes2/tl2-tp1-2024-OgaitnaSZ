@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using EspacioCadete;
-using EspacioCadeteria;
-using EspacioCliente;
-using EspacioPedido;
+﻿using EspacioCadeteria;
 using EspacioManejoArchivos;
+using OpcionesMenu;
 
 Cadeteria cadeteria = new Cadeteria("Cadeteria San Miguel", "381123123");
 var cadetes = CargaDeArchivos.CargarCadetesDesdeCSV("cadetes.csv");
+int opcionDatos = 0;
 
 foreach (var cadete in cadetes){
     cadeteria.AgregarCadete(cadete);
@@ -39,7 +34,7 @@ while(continuar){
                 Opciones.ReasignarPedidoAOtroCadete(cadeteria);
                 break;
             case 4:
-                cadeteria.GenerarInformeDeActividad();
+                cadeteria.GenerarInformeDeActividad(opcionDatos);
                 break;
             case 5:
                 continuar = false;

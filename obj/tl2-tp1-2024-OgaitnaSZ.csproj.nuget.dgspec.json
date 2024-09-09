@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\santi\\taller\\tl2-tp1-2024-OgaitnaSZ\\tl2-tp1-2024-OgaitnaSZ.csproj": {}
+    "D:\\Taller2\\tl2-tp1-2024-OgaitnaSZ\\tl2-tp1-2024-OgaitnaSZ.csproj": {}
   },
   "projects": {
-    "C:\\Users\\santi\\taller\\tl2-tp1-2024-OgaitnaSZ\\tl2-tp1-2024-OgaitnaSZ.csproj": {
+    "D:\\Taller2\\tl2-tp1-2024-OgaitnaSZ\\tl2-tp1-2024-OgaitnaSZ.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\santi\\taller\\tl2-tp1-2024-OgaitnaSZ\\tl2-tp1-2024-OgaitnaSZ.csproj",
+        "projectUniqueName": "D:\\Taller2\\tl2-tp1-2024-OgaitnaSZ\\tl2-tp1-2024-OgaitnaSZ.csproj",
         "projectName": "tl2-tp1-2024-OgaitnaSZ",
-        "projectPath": "C:\\Users\\santi\\taller\\tl2-tp1-2024-OgaitnaSZ\\tl2-tp1-2024-OgaitnaSZ.csproj",
+        "projectPath": "D:\\Taller2\\tl2-tp1-2024-OgaitnaSZ\\tl2-tp1-2024-OgaitnaSZ.csproj",
         "packagesPath": "C:\\Users\\santi\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\santi\\taller\\tl2-tp1-2024-OgaitnaSZ\\obj\\",
+        "outputPath": "D:\\Taller2\\tl2-tp1-2024-OgaitnaSZ\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\santi\\AppData\\Roaming\\NuGet\\NuGet.Config"

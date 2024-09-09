@@ -4,13 +4,15 @@ using System.Linq;
 using System.Text;
 using EspacioCadete;
 using EspacioPedido;
+using EspacioManejoArchivos;
+using System.Text.Json; 
 
 namespace EspacioCadeteria{
 class Cadeteria{
     public string Nombre { get; private set; }
     public string Telefono { get; private set; }
-    public List<Cadete> ListadoCadetes { get; private set; }
-    public List<Pedido> ListadoPedidos { get; private set; }
+    public static List<Cadete> ListadoCadetes { get; private set; }
+    public static List<Pedido> ListadoPedidos { get; private set; }
 
     public Cadeteria(string nombre, string telefono){
         Nombre = nombre;
@@ -23,43 +25,19 @@ class Cadeteria{
         pedido.Cadete = cadeteNuevo;
     }
 
-    public void GenerarInformeDeActividad(){
+    public void GenerarInformeDeActividad(int opcionDatos){
         if(ListadoPedidos.Count()>0){
-            double totalPedidos = 0;
-            double totalGanado = 0;
+            string archivoCadetes = "datos/Informe-de-cadetes";
+            string archivoCadeteria = "datos/Informe-de-cadeteria";
 
-            var informe = ListadoCadetes.Select(
-                cadete =>{
-                    double jornal = JornalACobrar(cadete.Id);
-                    double numPedidos = jornal / 500;
-                    totalPedidos += numPedidos;
-                    totalGanado += jornal;
-
-                    return new{
-                        NombreCadete = cadete.Nombre,
-                        PedidosEntregados = numPedidos,
-                        Jornal = jornal
-                    };
-                }).ToList();
-
-            double promedioPedidos = totalPedidos / (double)ListadoCadetes.Count;
-
-            DateTime fecha = DateTime.Today;
-            var csvCadetes = new StringBuilder();
-            csvCadetes.AppendLine("Cadete,Pedidos Entregados,Jornal,Fecha");
-
-            foreach (var item in informe){
-                csvCadetes.AppendLine($"{item.NombreCadete},{item.PedidosEntregados},{item.Jornal},{fecha.ToShortDateString()}");
+            AccesoADatos accesoADatos;
+            if(opcionDatos == 0){
+                accesoADatos = new AccesoCSV(archivoCadetes,archivoCadeteria);
+                accesoADatos.GuardarDatos(ListadoCadetes);
+            }else{
+                accesoADatos = new AccesoJSON(archivoCadetes,archivoCadeteria);
+                accesoADatos.GuardarDatos(ListadoCadetes);
             }
-
-            File.WriteAllText("Informe-de-cadetes.csv", csvCadetes.ToString());
-
-            var csvCadeteria = new StringBuilder();
-            csvCadeteria.AppendLine("Fecha,Total Ganado,Pedidos relizados,Promedio de pedidos por cadete");
-            csvCadeteria.AppendLine($"{fecha.ToShortDateString()},{totalGanado},{totalPedidos},{promedioPedidos}");
-            File.WriteAllText("Informe-de-cadeteria.csv", csvCadeteria.ToString());
-
-            Console.WriteLine($"Total de Pedidos: {totalPedidos}, Total Ganado: {totalGanado}, Promedio de Pedidos por Cadete: {promedioPedidos}");
         }else{
             Console.WriteLine("No hay pedidos");
         }
@@ -73,7 +51,7 @@ class Cadeteria{
         ListadoCadetes.Remove(cadete);
     }
 
-    public Cadete ObtenerCadetePorId(int id){
+    public static Cadete ObtenerCadetePorId(int id){
         foreach (var cadete in ListadoCadetes){
             if(cadete.Id == id){
                 Cadete cadeteEncontrado = cadete;
@@ -84,7 +62,7 @@ class Cadeteria{
     }
 
     //TP 2
-    public double JornalACobrar(int idCadete){
+    public static double JornalACobrar(int idCadete){
         Cadete cadete = ObtenerCadetePorId(idCadete);
         int jornal = 0;
         foreach(Pedido pedido in ListadoPedidos){

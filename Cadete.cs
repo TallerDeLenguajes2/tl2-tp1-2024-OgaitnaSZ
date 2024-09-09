@@ -1,7 +1,7 @@
 using EspacioPedido;
 
 namespace EspacioCadete{
-class Cadete{
+public class Cadete{
     public int Id { get; private set; }
     public string Nombre { get; private set; }
     public string Direccion { get; private set; }
