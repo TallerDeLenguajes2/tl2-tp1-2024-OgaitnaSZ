@@ -27,16 +27,13 @@ class Cadeteria{
 
     public void GenerarInformeDeActividad(int opcionDatos){
         if(ListadoPedidos.Count()>0){
-            string archivoCadetes = "datos/informe-de-cadetes";
-            string archivoCadeteria = "datos/informe-de-cadeteria";
-
             AccesoADatos accesoADatos;
-            if(opcionDatos == 0){
-                accesoADatos = new AccesoCSV(archivoCadetes,archivoCadeteria);
-                accesoADatos.GuardarDatos(ListadoCadetes);
+            if(opcionDatos == 1){
+                accesoADatos = new AccesoCSV();
+                accesoADatos.GuardarInforme(ListadoCadetes);
             }else{
-                accesoADatos = new AccesoJSON(archivoCadetes,archivoCadeteria);
-                accesoADatos.GuardarDatos(ListadoCadetes);
+                accesoADatos = new AccesoJSON();
+                accesoADatos.GuardarInforme(ListadoCadetes);
             }
         }else{
             Console.WriteLine("No hay pedidos");

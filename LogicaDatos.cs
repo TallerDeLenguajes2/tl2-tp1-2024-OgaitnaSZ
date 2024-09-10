@@ -56,25 +56,16 @@ namespace EspacioManejoArchivos{
 
     public abstract class AccesoADatos{
         public abstract List<Cadete> CargarDatos();
-        public abstract void GuardarDatos(List<Cadete> cadetes);
+        public abstract void GuardarInforme(List<Cadete> cadetes);
     }
 
     public class AccesoCSV : AccesoADatos{
-        private string RutaCadetes;
-        private string RutaCadeteria;
-
-        public AccesoCSV(string rutaCadetes, string rutaCadeteria){
-            RutaCadetes = rutaCadetes;
-            RutaCadeteria = rutaCadeteria;
-        }
 
         public override List<Cadete> CargarDatos(){
-            var cadetes = new List<Cadete>();
-
-            if (File.Exists(RutaCadetes)){
-                var lines = File.ReadAllLines(RutaCadetes);
-
-                foreach (var line in lines.Skip(1)){
+            List<Cadete> cadetes = new List<Cadete>();
+            if(File.Exists("datos/cadetes.csv")){
+                var lines = File.ReadAllLines("datos/cadetes.csv");
+                foreach (var line in lines){ 
                     var values = line.Split(',');
                     int id = int.Parse(values[0]);
                     string nombre = values[1];
@@ -89,7 +80,7 @@ namespace EspacioManejoArchivos{
             return cadetes;
         }
 
-        public override void GuardarDatos(List<Cadete> cadetes){
+        public override void GuardarInforme(List<Cadete> cadetes){
             double totalPedidos = 0;
             double totalGanado = 0;
             DateTime fecha = DateTime.Today;
@@ -111,64 +102,57 @@ namespace EspacioManejoArchivos{
 
             var csvCadetes = new StringBuilder();
 
-            if (!Directory.Exists("datos")){
-                Directory.CreateDirectory("datos");
+            if (!Directory.Exists("informes")){
+                Directory.CreateDirectory("informes");
             }
 
-            if (!File.Exists(RutaCadetes+".csv")){
+            if (!File.Exists("informes/informe-de-cadetes.csv")){
                 csvCadetes.AppendLine("Cadete,Pedidos Entregados,Jornal,Fecha");
             }
             
             foreach (var item in informe){
                 csvCadetes.AppendLine($"{item.NombreCadete},{item.PedidosEntregados},{item.Jornal},{fecha.ToShortDateString()}");
             }
-            File.AppendAllText(RutaCadetes+".csv", csvCadetes.ToString());
+            File.AppendAllText("informes/informe-de-cadetes.csv", csvCadetes.ToString());
 
             var csvCadeteria = new StringBuilder();
 
-            if (!File.Exists(RutaCadeteria+".csv")) {
+            if (!File.Exists("informes/informe-de-cadeteria.csv")) {
                 csvCadeteria.AppendLine("Fecha,Total Ganado,Pedidos relizados,Promedio de pedidos por cadete");
             }
 
             Console.WriteLine(promedioPedidos);
             
             csvCadeteria.AppendLine($"{fecha.ToShortDateString()},{totalGanado},{totalPedidos},{promedioPedidos.ToString("F2", CultureInfo.InvariantCulture)}");  //Para convertir coma en punto
-            File.AppendAllText(RutaCadeteria+".csv", csvCadeteria.ToString());
+            File.AppendAllText("informes/informe-de-cadeteria.csv", csvCadeteria.ToString());
         }
     }
 
     public class AccesoJSON : AccesoADatos{
-        private string RutaCadetes;
-        private string RutaCadeteria;
-        DateTime fecha = DateTime.Today;
         double totalPedidos = 0;
         double totalGanado = 0;
 
-        public AccesoJSON(string rutaCadetes, string rutaCadeteria){
-            RutaCadetes = rutaCadetes;
-            RutaCadeteria = rutaCadeteria;
-        }
         public override List<Cadete> CargarDatos(){
-            if (File.Exists(RutaCadetes)){
-                var jsonData = File.ReadAllText(RutaCadetes);
-                return JsonSerializer.Deserialize<List<Cadete>>(jsonData);
+            List<Cadete> cadetes = new List<Cadete>();
+            if(File.Exists("datos/cadetes.json")){
+                string jsonExistente = File.ReadAllText("datos/cadetes.json");
+                cadetes = JsonSerializer.Deserialize<List<Cadete>>(jsonExistente);
             }else{
-                Console.WriteLine("No se encontraron cadetes guardados");
+                Console.WriteLine("No existe el archivo o la ruta es incorrecta");
             }
-
-            return new List<Cadete>();
+            return cadetes;
         }
 
-        public override void GuardarDatos(List<Cadete> cadetes){
+        public override void GuardarInforme(List<Cadete> cadetes){
             List<InformeCadetes> listaCadetes = new();
             DateTime fecha = DateTime.Today;
 
-            if (!Directory.Exists("datos")){
-                Directory.CreateDirectory("datos");
+            if (!Directory.Exists("informes")){
+                Directory.CreateDirectory("informes");
             }
 
-            if (File.Exists(RutaCadetes + ".json")){
-                string jsonExistente = File.ReadAllText(RutaCadetes + ".json");
+            if (File.Exists("informes/informe-de-cadeteria.json")){
+                string jsonExistente = File.ReadAllText("informes/informe-de-cadeteria.json");
                 listaCadetes = JsonSerializer.Deserialize<List<InformeCadetes>>(jsonExistente);
             }
 
@@ -199,15 +183,15 @@ namespace EspacioManejoArchivos{
             }
 
             string jsonCadetes = JsonSerializer.Serialize(listaCadetes, new JsonSerializerOptions { WriteIndented = true });
-            File.WriteAllText(RutaCadetes+ ".json", jsonCadetes);
+            File.WriteAllText("informes/informe-de-cadetes.json", jsonCadetes);
 
 
             //Guardar datos de cadeteria en JSON
             List<InformeCadeteria> informeCadeteria = new();
             float promedioPedidos = (float)Cadeteria.ListadoPedidos.Count / (float)Cadeteria.ListadoCadetes.Count;
 
-            if (File.Exists(RutaCadeteria + ".json")){
-                string jsonExistente = File.ReadAllText(RutaCadeteria + ".json");
+            if (File.Exists("informes/informe-de-cadeteria.json")){
+                string jsonExistente = File.ReadAllText("informes/informe-de-cadeteria.json");
                 informeCadeteria = JsonSerializer.Deserialize<List<InformeCadeteria>>(jsonExistente);
             }
 
@@ -221,7 +205,7 @@ namespace EspacioManejoArchivos{
             informeCadeteria.Add(informeNuevo);
 
             var jsonCadeteria = JsonSerializer.Serialize(informeCadeteria, new JsonSerializerOptions { WriteIndented = true });
-            File.WriteAllText(RutaCadeteria +".json", jsonCadeteria);
+            File.WriteAllText("informes/informe-de-cadeteria.json", jsonCadeteria);
         }
     }
 }

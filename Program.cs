@@ -1,9 +1,14 @@
 ﻿using EspacioCadeteria;
 using EspacioManejoArchivos;
 using OpcionesMenu;
+using EspacioManejoArchivos;
+using EspacioCadete;
+
+List<Cadete> cadetes = new();
 
 bool continuar = true;
 int opcionDatos = 0;
+
 Console.WriteLine("──────────────────────────────────");
 Console.WriteLine("1. CSV");
 Console.WriteLine("2. JSON");
@@ -11,13 +16,18 @@ Console.WriteLine("────────────────────�
 Console.Write("Seleccione una opcion de datos para trabajar: ");
 while(continuar){
     if(int.TryParse(Console.ReadLine(), out opcionDatos)){
+        AccesoADatos accesoADatos;
         switch (opcionDatos){
             case 1:
                 opcionDatos = 1;
+                accesoADatos = new AccesoCSV();
+                cadetes = accesoADatos.CargarDatos();
                 continuar = false;
                 break;
             case 2: 
                 opcionDatos = 2;
+                accesoADatos = new AccesoJSON();
+                cadetes = accesoADatos.CargarDatos();
                 continuar = false;
                 break;
             default:
@@ -32,7 +42,6 @@ while(continuar){
 }
 
 Cadeteria cadeteria = new Cadeteria("Cadeteria San Miguel", "381123123");
-var cadetes = CargaDeArchivos.CargarCadetesDesdeCSV("cadetes.csv");
 
 foreach (var cadete in cadetes){
     cadeteria.AgregarCadete(cadete);
