@@ -27,8 +27,8 @@ class Cadeteria{
 
     public void GenerarInformeDeActividad(int opcionDatos){
         if(ListadoPedidos.Count()>0){
-            string archivoCadetes = "datos/Informe-de-cadetes";
-            string archivoCadeteria = "datos/Informe-de-cadeteria";
+            string archivoCadetes = "datos/informe-de-cadetes";
+            string archivoCadeteria = "datos/informe-de-cadeteria";
 
             AccesoADatos accesoADatos;
             if(opcionDatos == 0){

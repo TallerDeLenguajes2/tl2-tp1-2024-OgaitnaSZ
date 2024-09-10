@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text.Json.Serialization;
 using EspacioCadete;
 using EspacioCadeteria;
+using System.Globalization;
 
 namespace EspacioManejoArchivos{
     class CargaDeArchivos{
@@ -68,7 +69,7 @@ namespace EspacioManejoArchivos{
             double totalPedidos = 0;
             double totalGanado = 0;
             DateTime fecha = DateTime.Today;
-            double promedioPedidos = totalPedidos / Cadeteria.ListadoCadetes.Count;
+            float promedioPedidos = (float)Cadeteria.ListadoPedidos.Count / (float)Cadeteria.ListadoCadetes.Count;
 
             var informe = cadetes.Select(
                 cadete =>{
@@ -86,9 +87,14 @@ namespace EspacioManejoArchivos{
 
             var csvCadetes = new StringBuilder();
 
+            if (!Directory.Exists("datos")){
+                Directory.CreateDirectory("datos");
+            }
+
             if (!File.Exists(RutaCadetes+".csv")){
                 csvCadetes.AppendLine("Cadete,Pedidos Entregados,Jornal,Fecha");
             }
+            
             foreach (var item in informe){
                 csvCadetes.AppendLine($"{item.NombreCadete},{item.PedidosEntregados},{item.Jornal},{fecha.ToShortDateString()}");
             }
@@ -96,12 +102,13 @@ namespace EspacioManejoArchivos{
 
             var csvCadeteria = new StringBuilder();
 
-
             if (!File.Exists(RutaCadeteria+".csv")) {
                 csvCadeteria.AppendLine("Fecha,Total Ganado,Pedidos relizados,Promedio de pedidos por cadete");
             }
+
+            Console.WriteLine(promedioPedidos);
             
-            csvCadeteria.AppendLine($"{fecha.ToShortDateString()},{totalGanado},{totalPedidos},{promedioPedidos}");
+            csvCadeteria.AppendLine($"{fecha.ToShortDateString()},{totalGanado},{totalPedidos},{promedioPedidos.ToString("F2", CultureInfo.InvariantCulture)}");  //Para convertir coma en punto
             File.AppendAllText(RutaCadeteria+".csv", csvCadeteria.ToString());
         }
     }
@@ -121,6 +128,8 @@ namespace EspacioManejoArchivos{
             if (File.Exists(RutaCadetes)){
                 var jsonData = File.ReadAllText(RutaCadetes);
                 return JsonSerializer.Deserialize<List<Cadete>>(jsonData);
+            }else{
+                Console.WriteLine("No se encontraron cadetes guardados");
             }
 
             return new List<Cadete>();
