@@ -9,6 +9,30 @@ using EspacioCadeteria;
 using System.Globalization;
 
 namespace EspacioManejoArchivos{
+    public class InformeCadetes{
+        public string NombreCadete{ get; set; }
+        public double PedidosEntregados{ get; set; }
+        public double JornalACobrar{ get; set; }
+        public string Fecha{ get; set; }
+        public InformeCadetes(string nombreCadete, double pedidosEntregados, double jornalACobrar, string fecha){
+            NombreCadete = nombreCadete;
+            PedidosEntregados = pedidosEntregados;
+            JornalACobrar = jornalACobrar;
+            Fecha = fecha;
+        }
+    }
+    public class InformeCadeteria{
+        public string Fecha{ get; set; }
+        public double TotalGanado{ get; set; }
+        public double TotalPedidos{ get; set; }
+        public float PromedioPedidos{ get; set; }
+        public InformeCadeteria(string fecha, double totalGanado, double totalPedidos, float promedioPedidos){
+            Fecha = fecha;
+            TotalGanado = totalGanado;
+            TotalPedidos = totalPedidos;
+            PromedioPedidos = promedioPedidos;
+        }
+    }
     class CargaDeArchivos{
         public static List<Cadete> CargarCadetesDesdeCSV(string ruta){
             List<Cadete> cadetes = new List<Cadete>();
@@ -136,19 +160,68 @@ namespace EspacioManejoArchivos{
         }
 
         public override void GuardarDatos(List<Cadete> cadetes){
-            double promedioPedidos = totalPedidos / Cadeteria.ListadoCadetes.Count;
+            List<InformeCadetes> listaCadetes = new();
+            DateTime fecha = DateTime.Today;
 
-            var jsonData = JsonSerializer.Serialize(cadetes, new JsonSerializerOptions { WriteIndented = true });
-            File.WriteAllText(RutaCadetes, jsonData);
+            if (!Directory.Exists("datos")){
+                Directory.CreateDirectory("datos");
+            }
 
-            var informeCadeteria = new {
-                Fecha = fecha.ToShortDateString(),
-                TotalGanado = totalGanado,
-                TotalPedidos = totalPedidos,
-                PromedioPedidos = promedioPedidos
-            };
+            if (File.Exists(RutaCadetes + ".json")){
+                string jsonExistente = File.ReadAllText(RutaCadetes + ".json");
+                listaCadetes = JsonSerializer.Deserialize<List<InformeCadetes>>(jsonExistente);
+            }
+
+            var informe = cadetes.Select(
+                cadete =>{
+                    double jornal = Cadeteria.JornalACobrar(cadete.Id);
+                    double numPedidos = jornal / 500;
+                    totalPedidos += numPedidos;
+                    totalGanado += jornal;
+
+                    return new{
+                        NombreCadete = cadete.Nombre,
+                        PedidosEntregados = numPedidos,
+                        Jornal = jornal
+                    };
+                }).ToList();
+
+
+            foreach (var item in informe){
+                InformeCadetes nuevoInformeCadete = new InformeCadetes(
+                    item.NombreCadete,
+                    item.PedidosEntregados,
+                    item.Jornal,
+                    fecha.ToShortDateString()
+                );
+                
+                listaCadetes.Add(nuevoInformeCadete);
+            }
+
+            string jsonCadetes = JsonSerializer.Serialize(listaCadetes, new JsonSerializerOptions { WriteIndented = true });
+            File.WriteAllText(RutaCadetes+ ".json", jsonCadetes);
+
+
+            //Guardar datos de cadeteria en JSON
+            List<InformeCadeteria> informeCadeteria = new();
+            float promedioPedidos = (float)Cadeteria.ListadoPedidos.Count / (float)Cadeteria.ListadoCadetes.Count;
+
+            if (File.Exists(RutaCadeteria + ".json")){
+                string jsonExistente = File.ReadAllText(RutaCadeteria + ".json");
+                informeCadeteria = JsonSerializer.Deserialize<List<InformeCadeteria>>(jsonExistente);
+            }
+
+            InformeCadeteria informeNuevo = new InformeCadeteria(
+                fecha.ToShortDateString(),
+                totalGanado,
+                totalPedidos,
+                promedioPedidos
+            ); 
+
+            informeCadeteria.Add(informeNuevo);
+
             var jsonCadeteria = JsonSerializer.Serialize(informeCadeteria, new JsonSerializerOptions { WriteIndented = true });
-            File.WriteAllText(RutaCadeteria+".json", jsonCadeteria);
+            File.WriteAllText(RutaCadeteria +".json", jsonCadeteria);
         }
     }
 }

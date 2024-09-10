@@ -4,7 +4,7 @@ using OpcionesMenu;
 
 Cadeteria cadeteria = new Cadeteria("Cadeteria San Miguel", "381123123");
 var cadetes = CargaDeArchivos.CargarCadetesDesdeCSV("cadetes.csv");
-int opcionDatos = 0;
+int opcionDatos = 1;
 
 foreach (var cadete in cadetes){
     cadeteria.AgregarCadete(cadete);
