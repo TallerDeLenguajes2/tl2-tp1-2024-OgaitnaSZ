@@ -2,7 +2,7 @@ using EspacioCadete;
 using EspacioCliente;
 
 namespace EspacioPedido{
-class Pedido{
+public class Pedido{
     public int Nro { get; private set; }
     public string Obs { get; private set; }
     public Cliente Cliente { get; private set; }

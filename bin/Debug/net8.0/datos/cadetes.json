@@ -3,12 +3,12 @@
       "Id": 1,
       "Nombre": "Juan Ignacio",
       "Direccion": "Av. Roca 742",
-      "Telefono": 3813213213
+      "Telefono": "3813213213"
     },
     {
       "Id": 2,
       "Nombre": "Gustavo Kempa",
       "Direccion": "Av. San Martin 25",
-      "Telefono": 3811231231
+      "Telefono": "3811231231"
     }
 ]

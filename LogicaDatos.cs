@@ -33,36 +33,28 @@ namespace EspacioManejoArchivos{
             PromedioPedidos = promedioPedidos;
         }
     }
-    class CargaDeArchivos{
-        public static List<Cadete> CargarCadetesDesdeCSV(string ruta){
-            List<Cadete> cadetes = new List<Cadete>();
-            if(File.Exists(ruta)){
-                var lines = File.ReadAllLines(ruta);
+
+    public abstract class AccesoADatos{
+        public abstract Cadeteria CargarCadeteria();
+        public abstract void GuardarInforme(Cadeteria cadeteria);
+    }
+
+    public class AccesoCSV : AccesoADatos{
+        public override Cadeteria CargarCadeteria(){
+            Cadeteria cadeteria = new Cadeteria("","");
+            if(File.Exists("datos/cadetes.csv")){
+                var lines = File.ReadAllLines("datos/cadeteria.csv");
                 foreach (var line in lines){ 
                     var values = line.Split(',');
-                    int id = int.Parse(values[0]);
-                    string nombre = values[1];
-                    string direccion = values[2];
-                    string telefono = values[3];
-
-                    cadetes.Add(new Cadete(id, nombre, direccion, telefono));
+                    string nombre = values[0];
+                    string telefono = values[1];
+                    cadeteria = new Cadeteria(nombre,telefono);
                 }
             }else{
                 Console.WriteLine("No existe el archivo o la ruta es incorrecta");
             }
-            return cadetes;
-        }
-    }
 
-    public abstract class AccesoADatos{
-        public abstract List<Cadete> CargarDatos();
-        public abstract void GuardarInforme(List<Cadete> cadetes);
-    }
-
-    public class AccesoCSV : AccesoADatos{
-
-        public override List<Cadete> CargarDatos(){
-            List<Cadete> cadetes = new List<Cadete>();
+            //Agregar listado de cadetes
             if(File.Exists("datos/cadetes.csv")){
                 var lines = File.ReadAllLines("datos/cadetes.csv");
                 foreach (var line in lines){ 
@@ -72,23 +64,23 @@ namespace EspacioManejoArchivos{
                     string direccion = values[2];
                     string telefono = values[3];
 
-                    cadetes.Add(new Cadete(id, nombre, direccion, telefono));
+                    cadeteria.ListadoCadetes.Add(new Cadete(id, nombre, direccion, telefono));
                 }
             }else{
                 Console.WriteLine("No existe el archivo o la ruta es incorrecta");
             }
-            return cadetes;
+            return cadeteria;
         }
 
-        public override void GuardarInforme(List<Cadete> cadetes){
+        public override void GuardarInforme(Cadeteria cadeteria){
             double totalPedidos = 0;
             double totalGanado = 0;
             DateTime fecha = DateTime.Today;
-            float promedioPedidos = (float)Cadeteria.ListadoPedidos.Count / (float)Cadeteria.ListadoCadetes.Count;
+            float promedioPedidos = (float)cadeteria.ListadoPedidos.Count / (float)cadeteria.ListadoCadetes.Count;
 
-            var informe = cadetes.Select(
+            var informe = cadeteria.ListadoCadetes.Select(
                 cadete =>{
-                    double jornal = Cadeteria.JornalACobrar(cadete.Id);
+                    double jornal = cadeteria.JornalACobrar(cadete.Id);
                     double numPedidos = jornal / 500;
                     totalPedidos += numPedidos;
                     totalGanado += jornal;
@@ -131,8 +123,18 @@ namespace EspacioManejoArchivos{
     public class AccesoJSON : AccesoADatos{
         double totalPedidos = 0;
         double totalGanado = 0;
+        public override Cadeteria CargarCadeteria(){
+            Cadeteria cadeteria = new Cadeteria("","");
+            if(File.Exists("datos/cadeteria.json")){
+                string jsonExistente = File.ReadAllText("datos/cadeteria.json");
+                List<Cadeteria> ListaCadeteria = JsonSerializer.Deserialize<List<Cadeteria>>(jsonExistente);
+                cadeteria = ListaCadeteria[0];
+            }else{
+                Console.WriteLine("No existe el archivo o la ruta es incorrecta");
+            }
 
-        public override List<Cadete> CargarDatos(){
+            //Cargar lista de cadetes
+
             List<Cadete> cadetes = new List<Cadete>();
             if(File.Exists("datos/cadetes.json")){
                 string jsonExistente = File.ReadAllText("datos/cadetes.json");
@@ -140,10 +142,15 @@ namespace EspacioManejoArchivos{
             }else{
                 Console.WriteLine("No existe el archivo o la ruta es incorrecta");
             }
-            return cadetes;
+
+            foreach(Cadete cadete in cadetes){
+                cadeteria.ListadoCadetes.Add(cadete);
+            }
+
+            return cadeteria;
         }
 
-        public override void GuardarInforme(List<Cadete> cadetes){
+        public override void GuardarInforme(Cadeteria cadeteria){
             List<InformeCadetes> listaCadetes = new();
             DateTime fecha = DateTime.Today;
 
@@ -156,9 +163,9 @@ namespace EspacioManejoArchivos{
                 listaCadetes = JsonSerializer.Deserialize<List<InformeCadetes>>(jsonExistente);
             }
 
-            var informe = cadetes.Select(
+            var informe = cadeteria.ListadoCadetes.Select(
                 cadete =>{
-                    double jornal = Cadeteria.JornalACobrar(cadete.Id);
+                    double jornal = cadeteria.JornalACobrar(cadete.Id);
                     double numPedidos = jornal / 500;
                     totalPedidos += numPedidos;
                     totalGanado += jornal;
@@ -188,7 +195,7 @@ namespace EspacioManejoArchivos{
 
             //Guardar datos de cadeteria en JSON
             List<InformeCadeteria> informeCadeteria = new();
-            float promedioPedidos = (float)Cadeteria.ListadoPedidos.Count / (float)Cadeteria.ListadoCadetes.Count;
+            float promedioPedidos = (float)cadeteria.ListadoPedidos.Count / (float)cadeteria.ListadoCadetes.Count;
 
             if (File.Exists("informes/informe-de-cadeteria.json")){
                 string jsonExistente = File.ReadAllText("informes/informe-de-cadeteria.json");

@@ -5,6 +5,7 @@ using EspacioManejoArchivos;
 using EspacioCadete;
 
 List<Cadete> cadetes = new();
+Cadeteria cadeteria = new Cadeteria("","");
 
 bool continuar = true;
 int opcionDatos = 0;
@@ -21,13 +22,13 @@ while(continuar){
             case 1:
                 opcionDatos = 1;
                 accesoADatos = new AccesoCSV();
-                cadetes = accesoADatos.CargarDatos();
+                cadeteria = accesoADatos.CargarCadeteria();
                 continuar = false;
                 break;
             case 2: 
                 opcionDatos = 2;
                 accesoADatos = new AccesoJSON();
-                cadetes = accesoADatos.CargarDatos();
+                cadeteria = accesoADatos.CargarCadeteria();
                 continuar = false;
                 break;
             default:
@@ -41,11 +42,6 @@ while(continuar){
     }
 }
 
-Cadeteria cadeteria = new Cadeteria("Cadeteria San Miguel", "381123123");
-
-foreach (var cadete in cadetes){
-    cadeteria.AgregarCadete(cadete);
-}
 
 continuar = true;
 while(continuar){

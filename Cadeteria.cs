@@ -8,11 +8,11 @@ using EspacioManejoArchivos;
 using System.Text.Json; 
 
 namespace EspacioCadeteria{
-class Cadeteria{
+public class Cadeteria{
     public string Nombre { get; private set; }
     public string Telefono { get; private set; }
-    public static List<Cadete> ListadoCadetes { get; private set; }
-    public static List<Pedido> ListadoPedidos { get; private set; }
+    public List<Cadete> ListadoCadetes { get; private set; }
+    public List<Pedido> ListadoPedidos { get; private set; }
 
     public Cadeteria(string nombre, string telefono){
         Nombre = nombre;
@@ -30,10 +30,10 @@ class Cadeteria{
             AccesoADatos accesoADatos;
             if(opcionDatos == 1){
                 accesoADatos = new AccesoCSV();
-                accesoADatos.GuardarInforme(ListadoCadetes);
+                accesoADatos.GuardarInforme(this);
             }else{
                 accesoADatos = new AccesoJSON();
-                accesoADatos.GuardarInforme(ListadoCadetes);
+                accesoADatos.GuardarInforme(this);
             }
         }else{
             Console.WriteLine("No hay pedidos");
@@ -48,7 +48,7 @@ class Cadeteria{
         ListadoCadetes.Remove(cadete);
     }
 
-    public static Cadete ObtenerCadetePorId(int id){
+    public Cadete ObtenerCadetePorId(int id){
         foreach (var cadete in ListadoCadetes){
             if(cadete.Id == id){
                 Cadete cadeteEncontrado = cadete;
@@ -59,7 +59,7 @@ class Cadeteria{
     }
 
     //TP 2
-    public static double JornalACobrar(int idCadete){
+    public double JornalACobrar(int idCadete){
         Cadete cadete = ObtenerCadetePorId(idCadete);
         int jornal = 0;
         foreach(Pedido pedido in ListadoPedidos){

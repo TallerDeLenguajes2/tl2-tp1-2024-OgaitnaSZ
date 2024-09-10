@@ -61,11 +61,11 @@ namespace OpcionesMenu{
                     
                     int idCadete;
                     bool controlCadete = true;
-                    mostrarCadetes(Cadeteria.ListadoCadetes);
+                    mostrarCadetes(cadeteria.ListadoCadetes);
                     while (controlCadete){
                         Console.WriteLine("Ingrese el ID del cadete para asignar el pedido:");
                         if (int.TryParse(Console.ReadLine(), out idCadete)){
-                            Cadete cadete = Cadeteria.ObtenerCadetePorId(idCadete);
+                            Cadete cadete = cadeteria.ObtenerCadetePorId(idCadete);
                             if (cadete != null){
                                 cadeteria.AgregarPedido(new Pedido(nroPedido, obs, cliente, cadete));
                                 Console.WriteLine("Pedido creado con éxito.");
@@ -85,15 +85,15 @@ namespace OpcionesMenu{
         }
         
         public static void CambiarEstadoDePedido(Cadeteria cadeteria){
-            if(Cadeteria.ListadoPedidos != null && Cadeteria.ListadoPedidos.Count()>0){
-                mostrarPedidos(Cadeteria.ListadoPedidos);
+            if(cadeteria.ListadoPedidos != null && cadeteria.ListadoPedidos.Count()>0){
+                mostrarPedidos(cadeteria.ListadoPedidos);
                 Console.WriteLine("Ingrese el numero del pedido:");
                 int numPedido;
                 bool pedidoEncontrado = true;
 
                 while(pedidoEncontrado){
                     if(int.TryParse(Console.ReadLine(), out numPedido)){
-                        foreach(Pedido pedido in Cadeteria.ListadoPedidos){
+                        foreach(Pedido pedido in cadeteria.ListadoPedidos){
                             if(pedido.Nro == numPedido){
                                 pedido.CambiarEstado("Entregado");
                                 Console.WriteLine("Pedido actualizado con exito");
@@ -114,22 +114,22 @@ namespace OpcionesMenu{
         }
 
         public static void ReasignarPedidoAOtroCadete(Cadeteria cadeteria){
-            if(Cadeteria.ListadoPedidos != null && Cadeteria.ListadoPedidos.Count()>0){
-                mostrarPedidos(Cadeteria.ListadoPedidos);
+            if(cadeteria.ListadoPedidos != null && cadeteria.ListadoPedidos.Count()>0){
+                mostrarPedidos(cadeteria.ListadoPedidos);
                 int numPedido;
                 bool pedidoEncontrado = true;
                 Console.Write("Ingrese el numero de pedido a reasignar: ");
                 while(pedidoEncontrado){
                     if(int.TryParse(Console.ReadLine(), out numPedido)){
-                        foreach(Pedido pedido in Cadeteria.ListadoPedidos){
+                        foreach(Pedido pedido in cadeteria.ListadoPedidos){
                             if(pedido.Nro == numPedido){
-                                mostrarCadetes(Cadeteria.ListadoCadetes);
+                                mostrarCadetes(cadeteria.ListadoCadetes);
                                 Console.WriteLine("Ingrese ID del cadete a asignar: ");
                                 int idCadete;
                                 bool cadeteEncontrado = true;
                                 while(cadeteEncontrado){
                                     if(int.TryParse(Console.ReadLine(), out idCadete)){
-                                        Cadete cadete = Cadeteria.ObtenerCadetePorId(idCadete);
+                                        Cadete cadete = cadeteria.ObtenerCadetePorId(idCadete);
                                         if(cadete != null){
                                             cadeteria.ReasignarPedido(cadete, pedido);
                                             Console.WriteLine("Pedido reasignado con exito");
