@@ -22,5 +22,17 @@
     "PedidosEntregados": 1,
     "JornalACobrar": 500,
     "Fecha": "10/9/2024"
+  },
+  {
+    "NombreCadete": "Juan Ignacio",
+    "PedidosEntregados": 0,
+    "JornalACobrar": 0,
+    "Fecha": "10/9/2024"
+  },
+  {
+    "NombreCadete": "Gustavo Kempa",
+    "PedidosEntregados": 1,
+    "JornalACobrar": 500,
+    "Fecha": "10/9/2024"
   }
 ]
