@@ -6,7 +6,7 @@ using EspacioPedido;
 namespace OpcionesMenu{
         class Opciones{
         public static void DarDeAltaPedido(Cadeteria cadeteria){
-            Console.WriteLine("Ingrese el número del pedido:");
+            Console.Write("Ingrese el número del pedido: ");
             int nroPedido;
             bool control = true;
 
@@ -14,7 +14,7 @@ namespace OpcionesMenu{
                 if(int.TryParse(Console.ReadLine(), out nroPedido) && nroPedido > 0){
                     string obs = string.Empty;
                     while (string.IsNullOrWhiteSpace(obs)){
-                        Console.WriteLine("Ingrese la observación del pedido:");
+                        Console.Write("Ingrese la observación del pedido: ");
                         obs = Console.ReadLine();
                         if (string.IsNullOrWhiteSpace(obs)){
                             Console.WriteLine("La observación no puede estar vacía.");
@@ -23,7 +23,7 @@ namespace OpcionesMenu{
 
                     string nombreCliente = string.Empty;
                     while (string.IsNullOrWhiteSpace(nombreCliente)){
-                        Console.WriteLine("Ingrese el nombre del cliente:");
+                        Console.Write("Ingrese el nombre del cliente: ");
                         nombreCliente = Console.ReadLine();
                         if (string.IsNullOrWhiteSpace(nombreCliente)){
                             Console.WriteLine("El nombre del cliente no puede estar vacío.");
@@ -32,7 +32,7 @@ namespace OpcionesMenu{
 
                     string direccionCliente = string.Empty;
                     while (string.IsNullOrWhiteSpace(direccionCliente)){
-                        Console.WriteLine("Ingrese la dirección del cliente:");
+                        Console.Write("Ingrese la dirección del cliente: ");
                         direccionCliente = Console.ReadLine();
                         if (string.IsNullOrWhiteSpace(direccionCliente)){
                             Console.WriteLine("La dirección no puede estar vacía.");
@@ -41,7 +41,7 @@ namespace OpcionesMenu{
 
                     string telefonoCliente = string.Empty;
                     while (string.IsNullOrWhiteSpace(telefonoCliente)){
-                        Console.WriteLine("Ingrese el teléfono del cliente:");
+                        Console.Write("Ingrese el teléfono del cliente: ");
                         telefonoCliente = Console.ReadLine();
                         if (string.IsNullOrWhiteSpace(telefonoCliente)){
                             Console.WriteLine("El teléfono no puede estar vacío.");
@@ -50,7 +50,7 @@ namespace OpcionesMenu{
 
                     string datosReferencia = string.Empty;
                     while (string.IsNullOrWhiteSpace(datosReferencia)){
-                        Console.WriteLine("Ingrese los datos de referencia de la dirección:");
+                        Console.Write("Ingrese los datos de referencia de la dirección: ");
                         datosReferencia = Console.ReadLine();
                         if (string.IsNullOrWhiteSpace(datosReferencia)){
                             Console.WriteLine("Los datos de referencia no pueden estar vacíos.");
@@ -63,7 +63,7 @@ namespace OpcionesMenu{
                     bool controlCadete = true;
                     mostrarCadetes(cadeteria.ListadoCadetes);
                     while (controlCadete){
-                        Console.WriteLine("Ingrese el ID del cadete para asignar el pedido:");
+                        Console.Write("Ingrese el ID del cadete para asignar el pedido: ");
                         if (int.TryParse(Console.ReadLine(), out idCadete)){
                             Cadete cadete = cadeteria.ObtenerCadetePorId(idCadete);
                             if (cadete != null){
@@ -79,7 +79,7 @@ namespace OpcionesMenu{
                         }
                     }
                 }else{
-                    Console.WriteLine("Ingrese un ID valido");
+                    Console.WriteLine("Ingrese un ID valido.");
                 }
             }while(control);
         }
@@ -87,7 +87,7 @@ namespace OpcionesMenu{
         public static void CambiarEstadoDePedido(Cadeteria cadeteria){
             if(cadeteria.ListadoPedidos != null && cadeteria.ListadoPedidos.Count()>0){
                 mostrarPedidos(cadeteria.ListadoPedidos);
-                Console.WriteLine("Ingrese el numero del pedido:");
+                Console.Write("Ingrese el numero del pedido: ");
                 int numPedido;
                 bool pedidoEncontrado = true;
 
@@ -102,10 +102,10 @@ namespace OpcionesMenu{
                             }
                         }
                         if(pedidoEncontrado){
-                            Console.WriteLine("Escriba un ID de pedido existente");
+                            Console.Write("Escriba un ID de pedido existente: ");
                         }
                     }else{
-                        Console.WriteLine("Escriba un numero");
+                        Console.Write("Escriba un numero: ");
                     }
                 }
             }else{
@@ -124,7 +124,7 @@ namespace OpcionesMenu{
                         foreach(Pedido pedido in cadeteria.ListadoPedidos){
                             if(pedido.Nro == numPedido){
                                 mostrarCadetes(cadeteria.ListadoCadetes);
-                                Console.WriteLine("Ingrese ID del cadete a asignar: ");
+                                Console.Write("Ingrese ID del cadete a asignar: ");
                                 int idCadete;
                                 bool cadeteEncontrado = true;
                                 while(cadeteEncontrado){
@@ -136,20 +136,20 @@ namespace OpcionesMenu{
                                             cadeteEncontrado = false;
                                         }
                                         if(cadeteEncontrado){
-                                            Console.WriteLine("Escriba un ID de cadete existente");
+                                            Console.Write("Escriba un ID de cadete existente: ");
                                         }
                                         pedidoEncontrado = false;
                                     }else{
-                                        Console.WriteLine("Escriba un numero");
+                                        Console.Write("Escriba un numero: ");
                                     }
                                 }
                             }
                         }
                         if(pedidoEncontrado){
-                            Console.WriteLine("Escriba un ID de pedido existente");
+                            Console.Write("Escriba un ID de pedido existente: ");
                         }
                     }else{
-                        Console.WriteLine("Escriba un numero");
+                        Console.Write("Escriba un numero: ");
                     }
                 }
             }else{

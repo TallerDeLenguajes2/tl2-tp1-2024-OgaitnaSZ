@@ -1,10 +1,7 @@
 ﻿using EspacioCadeteria;
 using EspacioManejoArchivos;
 using OpcionesMenu;
-using EspacioManejoArchivos;
-using EspacioCadete;
 
-List<Cadete> cadetes = new();
 Cadeteria cadeteria = new Cadeteria("","");
 
 bool continuar = true;
@@ -20,28 +17,25 @@ while(continuar){
         AccesoADatos accesoADatos;
         switch (opcionDatos){
             case 1:
-                opcionDatos = 1;
                 accesoADatos = new AccesoCSV();
                 cadeteria = accesoADatos.CargarCadeteria();
                 continuar = false;
                 break;
             case 2: 
-                opcionDatos = 2;
                 accesoADatos = new AccesoJSON();
                 cadeteria = accesoADatos.CargarCadeteria();
                 continuar = false;
                 break;
             default:
-                Console.WriteLine("Seleccione una opcion valida");
+                Console.WriteLine("Seleccione una opcion valida.");
                 Thread.Sleep(1000);
                 break;
         }
     }else{
-        Console.WriteLine("Escriba un numero");
+        Console.WriteLine("Escriba un numero.");
         Thread.Sleep(1000);
     }
 }
-
 
 continuar = true;
 while(continuar){
@@ -73,12 +67,12 @@ while(continuar){
                 continuar = false;
                 break;
             default:
-                Console.WriteLine("Seleccione una opcion valida");
+                Console.WriteLine("Seleccione una opcion valida.");
                 Thread.Sleep(1000);
                 break;
         }
     }else{
-        Console.WriteLine("Escriba un numero");
+        Console.WriteLine("Escriba un numero.");
         Thread.Sleep(1000);
     }
 }

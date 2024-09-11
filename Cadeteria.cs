@@ -1,11 +1,6 @@
-using System;
-using System.IO;
-using System.Linq;
-using System.Text;
 using EspacioCadete;
 using EspacioPedido;
 using EspacioManejoArchivos;
-using System.Text.Json; 
 
 namespace EspacioCadeteria{
 public class Cadeteria{
@@ -36,7 +31,7 @@ public class Cadeteria{
                 accesoADatos.GuardarInforme(this);
             }
         }else{
-            Console.WriteLine("No hay pedidos");
+            Console.WriteLine("No hay pedidos realizados");
         }
     }
 

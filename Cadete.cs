@@ -1,5 +1,3 @@
-using EspacioPedido;
-
 namespace EspacioCadete{
 public class Cadete{
     public int Id { get; private set; }
