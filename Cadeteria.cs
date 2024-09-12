@@ -82,7 +82,7 @@ public class Cadeteria{
         bool control = true;
 
         do{
-            if(int.TryParse(Console.ReadLine(), out nroPedido) && nroPedido > 0){
+            if(int.TryParse(Console.ReadLine(), out nroPedido) && nroPedido > 0 && pedidoExiste(nroPedido)){
                 string obs = string.Empty;
                 while (string.IsNullOrWhiteSpace(obs)){
                     Console.Write("Ingrese la observación del pedido: ");
@@ -150,9 +150,28 @@ public class Cadeteria{
                     }
                 }
             }else{
-                Console.WriteLine("Ingrese un ID valido.");
+                Console.WriteLine("El numero de pedido no es valido o ya existe.");
             }
         }while(control);
+    }
+    public int contarPedidosPendientes(){
+        int pedidosPendientes = 0;
+        foreach(Pedido pedido in ListadoPedidos){
+            if(pedido.Estado == "Pendiente"){
+                pedidosPendientes++;
+            }
+        }
+        return pedidosPendientes;
+    }
+
+    public bool pedidoExiste(int numPedido){
+        bool existe = true;
+        foreach(Pedido pedido in ListadoPedidos){
+            if(pedido.Nro == numPedido){
+                existe = false;
+            }
+        }
+        return existe;
     }
 }
 }
