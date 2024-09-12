@@ -119,8 +119,6 @@ namespace EspacioManejoArchivos{
             if (!File.Exists("informes/informe-de-cadeteria.csv")) {
                 csvCadeteria.AppendLine("Fecha,Total Ganado,Pedidos relizados,Promedio de pedidos por cadete");
             }
-
-            Console.WriteLine(promedioPedidos);
             
             csvCadeteria.AppendLine($"{fecha.ToShortDateString()},{totalGanado},{totalPedidos},{promedioPedidos.ToString("F2", CultureInfo.InvariantCulture)}");  //Para convertir coma en punto
             File.AppendAllText("informes/informe-de-cadeteria.csv", csvCadeteria.ToString());
