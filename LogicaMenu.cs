@@ -11,7 +11,7 @@ namespace OpcionesMenu{
             bool control = true;
 
             do{
-                if(int.TryParse(Console.ReadLine(), out nroPedido) && nroPedido > 0){
+                if(int.TryParse(Console.ReadLine(), out nroPedido) && nroPedido > 0 && cadeteria.pedidoExiste(nroPedido)){
                     string obs = string.Empty;
                     while (string.IsNullOrWhiteSpace(obs)){
                         Console.Write("Ingrese la observación del pedido: ");
@@ -79,14 +79,14 @@ namespace OpcionesMenu{
                         }
                     }
                 }else{
-                    Console.WriteLine("Ingrese un ID valido.");
+                    Console.WriteLine("El numero de pedido no es valido o ya existe.");
                 }
             }while(control);
         }
         
         public static void CambiarEstadoDePedido(Cadeteria cadeteria){
-            if(cadeteria.ListadoPedidos != null && cadeteria.ListadoPedidos.Count()>0){
-                mostrarPedidos(cadeteria.ListadoPedidos);
+            if(cadeteria.ListadoPedidos != null && cadeteria.contarPedidosPendientes()>0){
+                mostrarPedidosPendientes(cadeteria.ListadoPedidos);
                 Console.Write("Ingrese el numero del pedido: ");
                 int numPedido;
                 bool pedidoEncontrado = true;
@@ -114,8 +114,8 @@ namespace OpcionesMenu{
         }
 
         public static void ReasignarPedidoAOtroCadete(Cadeteria cadeteria){
-            if(cadeteria.ListadoPedidos != null && cadeteria.ListadoPedidos.Count()>0){
-                mostrarPedidos(cadeteria.ListadoPedidos);
+            if(cadeteria.ListadoPedidos != null && cadeteria.contarPedidosPendientes()>0){
+                mostrarPedidosPendientes(cadeteria.ListadoPedidos);
                 int numPedido;
                 bool pedidoEncontrado = true;
                 Console.Write("Ingrese el numero de pedido a reasignar: ");
@@ -169,9 +169,11 @@ namespace OpcionesMenu{
             Console.WriteLine($"Nombre: {cadete.Nombre}");
             Console.WriteLine("─────────────────────────────────────");
         }
-        private static void mostrarPedidos(List<Pedido> pedidos){
+        private static void mostrarPedidosPendientes(List<Pedido> pedidos){
             foreach(Pedido pedido in pedidos){
-                mostrarPedido(pedido);
+                if(pedido.Estado == "Pendiente"){
+                    mostrarPedido(pedido);
+                }
             }
         }
         private static void mostrarPedido(Pedido pedido){

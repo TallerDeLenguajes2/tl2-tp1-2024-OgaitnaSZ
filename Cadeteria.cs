@@ -75,5 +75,25 @@ public class Cadeteria{
     public void AgregarPedido(Pedido pedido){
         ListadoPedidos.Add(pedido);
     }
+
+    public int contarPedidosPendientes(){
+        int pedidosPendientes = 0;
+        foreach(Pedido pedido in ListadoPedidos){
+            if(pedido.Estado == "Pendiente"){
+                pedidosPendientes++;
+            }
+        }
+        return pedidosPendientes;
+    }
+
+    public bool pedidoExiste(int numPedido){
+        bool existe = true;
+        foreach(Pedido pedido in ListadoPedidos){
+            if(pedido.Nro == numPedido){
+                existe = false;
+            }
+        }
+        return existe;
+    }
 }
 }
