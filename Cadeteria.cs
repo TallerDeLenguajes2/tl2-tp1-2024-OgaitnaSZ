@@ -80,24 +80,8 @@ public class Cadeteria{
         Cadete cadete = ObtenerCadetePorId(idCadete);
         ListadoPedidos.Add(new Pedido(nroPedido, obs, cliente, cadete));
     }
-    public int contarPedidosPendientes(){
-        int pedidosPendientes = 0;
-        foreach(Pedido pedido in ListadoPedidos){
-            if(pedido.Estado == "Pendiente"){
-                pedidosPendientes++;
-            }
-        }
-        return pedidosPendientes;
-    }
+    public int contarPedidosPendientes()=>ListadoPedidos.Where(Pedido=>Pedido.Estado=="Pendiente").Count();
 
-    public bool pedidoExiste(int numPedido){
-        bool existe = true;
-        foreach(Pedido pedido in ListadoPedidos){
-            if(pedido.Nro == numPedido){
-                existe = false;
-            }
-        }
-        return existe;
-    }
+    public bool pedidoExiste(int numPedido) => ListadoPedidos.Any(a=>a.Nro == numPedido);
 }
 }
